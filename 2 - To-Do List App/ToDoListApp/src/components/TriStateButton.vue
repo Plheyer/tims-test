@@ -2,34 +2,46 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  name: {
-    type: String,
-    required: true,
-  },
+    state: {
+        type: Number,
+        required: true
+    },
+    checklistIndex: {
+        type: Number,
+        required: true
+    },
+    taskIndex: {
+        type: Number,
+        required: true
+    },
 });
 
+const taskId = computed(() => {
+    return props.checklistIndex + "-" + props.taskIndex;
+})
+
 const idTodo = computed(() => {
-    return props.name + "-todo"
+    return taskId.value + "-todo"
 });
 
 const idInProgress = computed(() => {
-    return props.name + "-inProgress"
+    return taskId.value + "-inProgress"
 });
 
 const idDone = computed(() => {
-    return props.name + "-done"
+    return taskId.value + "-done"
 });
 </script>
 
 <template>
     <div class="tri-state">
-        <input :id="idTodo" :name="name" type="radio" checked/>
+        <input :id="idTodo" :name="taskId" type="radio" :checked="state == 0"/>
         <label :for="idTodo" onclick="">❌ To do</label>
 
-        <input :id="idInProgress" :name="name" type="radio" />
+        <input :id="idInProgress" :name="taskId" type="radio" :checked="state == 0"/>
         <label :for="idInProgress" onclick="">⏳ In Progress</label>
 
-        <input :id="idDone" :name="name" type="radio" />
+        <input :id="idDone" :name="taskId" type="radio" :checked="state == 0"/>
         <label :for="idDone" onclick="">✅ Done</label>
     </div>
 </template>

@@ -1,112 +1,41 @@
 <script setup>
-    import TriStateButton from './TriStateButton.vue';
+    import { ref } from 'vue';
+    import CardItem from './CardItem.vue';
+import Task from '@/model/Task';
+import Checklist from '@/model/Checklist';
+    const newTask = ref({ text: "", status: 0 });
+    const tasks = ref([
+        new Task("My first task", 0),
+        new Task("My second task", 2),
+        new Task("My third task", 1),
+    ]);
+    const tasks2 = ref([
+        new Task("My first task", 0),
+    ]);
+    const tasks3 = ref([
+        new Task("My first task", 0),
+        new Task("My second task", 2),
+        new Task("My third task", 1),
+        new Task("My fourth task", 2),
+        new Task("My fifth task", 1),
+        new Task("My sixth task", 2),
+        new Task("My seventh task", 1),
+    ]);
+    const checklists = ref([
+        new Checklist(tasks),
+        new Checklist(tasks2),
+        new Checklist(tasks3),
+    ]);
 </script>
 
 <template>
     <div class="cards">
-        <div class="card">
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 1" />
-                    <button onclick="" class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="1-task-1"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 2" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="1-task-2"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 3" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="1-task-3"/>
+        <div class="card" v-for="(checklist, checklistIndex) in checklists">
+            <div class="tasks" v-for="(task, index) in checklist.tasks">
+                <CardItem :task="task" :checklist-index="checklistIndex" :task-index="index" />
             </div>
             <div class="card-new-task">
-                <input type="text" value="" placeholder="New task..." />
-                <button>➕</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 1" />
-                    <button onclick="" class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="2-task-1"/>
-            </div>
-            <div class="card-new-task">
-                <input type="text" value="" placeholder="New task..." />
-                <button>➕</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 1" />
-                    <button onclick="" class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-1"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 2" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-2"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 3" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-3"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 4" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-4"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 5" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-5"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 6" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-6"/>
-            </div>
-            <div class="card-item">
-                <div class="card-item-title">
-                    <input type="text" value="Tâche 7" />
-                    <button class="edit-button">✏️</button>
-                    <button class="delete-button">🗑️</button>
-                </div>
-                <TriStateButton name="3-task-7"/>
-            </div>
-            <div class="card-new-task">
-                <input type="text" value="" placeholder="New task..." />
+                <input type="text" :value="newTask.text" placeholder="New task..." />
                 <button>➕</button>
             </div>
         </div>
@@ -138,49 +67,12 @@ body {
     height: 100%;
 }
 
-.card-item {
-    display: flex;
-    flex-direction: column;
-    margin: 5px 0;
-    padding: 5px;
-}
-
-.card-item:not(:last-child)::after {
-    content: '';
-    height: 1px;
-    width: 100%;
-    background-color: #000000;
-}
-
-.card-item-title {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 5px;
-}
-
-.card-item-title > input, .card-new-task > input {
-    border-radius: 5px;
-    border: solid #5dacda 2px;
-}
-
-.card-item-title button {
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-}
-
 .card-new-task {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: 27px;
     gap: 5px;
-}
-
-.card-new-task > input {
-    flex: 1;
 }
 
 .card-new-task > button {
@@ -193,28 +85,6 @@ body {
 
 .card-new-task > button:hover {
     background-color: #49c05c;
-    transition: all ease-in-out .2s;
-}
-
-.delete-button {
-    background-color: rgb(255, 96, 96);
-    border-radius: 5px;
-    transition: all ease-in-out .2s;
-}
-
-.delete-button:hover {
-    background-color: rgb(255, 73, 73);
-    transition: all ease-in-out .2s;
-}
-
-.edit-button {
-    background-color: #5dacda;
-    border-radius: 5px;
-    transition: all ease-in-out .2s;
-}
-
-.edit-button:hover {
-    background-color: #43a3db;
     transition: all ease-in-out .2s;
 }
 </style>
