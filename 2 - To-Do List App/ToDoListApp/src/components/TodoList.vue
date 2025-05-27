@@ -1,26 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import Task from '@/model/Task';
 import Checklist from '@/model/Checklist';
 import Card from './Card.vue';
 import checklistsFromJson from '@/factory/ChecklistFactory';
-const tasks = ref([
-    new Task("My first task", 0),
-    new Task("My second task", 2),
-    new Task("My third task", 1),
-]);
-const tasks2 = ref([
-    new Task("My first task", 0),
-]);
-const tasks3 = ref([
-    new Task("My first task", 0),
-    new Task("My second task", 2),
-    new Task("My third task", 1),
-    new Task("My fourth task", 2),
-    new Task("My fifth task", 1),
-    new Task("My sixth task", 2),
-    new Task("My seventh task", 1),
-]);
+
 let checklists;
 if (localStorage.checklists) {
     checklists = ref(checklistsFromJson(localStorage.getItem("checklists")));

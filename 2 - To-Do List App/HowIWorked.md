@@ -2,9 +2,9 @@
 
 ## Learning Vue.js
 
-Firstly, I didn't know any of new web frameworks, so I thought it would be a great challenge to start learning a new one.
+Firstly, I didn't know any of the new web frameworks, so I thought it would be a great challenge to start learning a new one.
 
-I chose Vue.js based on how much I hear about this framework.
+I chose Vue.js based on how much I have heard about this framework.
 
 To learn it, I mainly based on the official documentation.
 
@@ -14,7 +14,7 @@ First, I ran this command: `npm create vue@latest`
 
 I used Visual Studio Code with the official vue extension
 
-Then, I started only to create the designs with the tri state buttons (Todo, In progress, Done).
+Then, I started to create the designs only with the tri state buttons (Todo, In progress, Done).
 
 I faced the problem that all my tri state buttons were linked together, so i had to provide a different id and name foreach tri state button.
 To do so, I used the power of Vue.js with props as I could read in the docs, and also some computed property for the id to follow the official documentation. 
@@ -31,7 +31,7 @@ I strongly believe that the most important part which I'm proud of is the way I 
 
 Alongside, I also used some StackOverflow when I ran through JavaScript/HTML problems like "How to call a javascript function on radio click". I didn't want to use some AI because my goal was to showcase my skill to adapt, even for CSS.
 
-To add some details about how I work, I also start by doing very simple ideas (starting with the design, with a MVP1, like doing the persistence at the very end). It helps doing an iterative work, working well with SCRUM methods used in some companies.
+To add some details about how I work, I also start by doing very simple ideas (starting with the design, with a MVP1, like doing the persistence at the very end). It helps in doing an iterative work, working well with SCRUM methods used in some companies.
 
 In this project, I've learnt the framework Vue.js which I didn't know anything about. The most interesting thing was, I think, the "v-" attributes idea coupled with all :prop="" providing a nice tool to do some binding (which I was struggling to make work in other projects with pure HTML/JS).
 
@@ -42,3 +42,8 @@ I managed to allow:
 - CRUD for Tasks
 - Persistence
 - Responsive
+- Light/dark mode
+
+I wanted to implement the drag and drop feature allowing to reorder task, however, with my current course, I didn't get the time to implement it not to give up on my school work. However, I would have added an order/number property to the Task class.
+Then, to display all tasks, I would have sorted them by order/number property.
+Finally, I would have implemented the drag and drop system by configuring the drag div and the drop area, and when it would have been dropped, I would have saved the current task order to the localstorage by just updating the class model then saving the checklists in the localstorage.
