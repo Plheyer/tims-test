@@ -1,9 +1,14 @@
 <script setup>
+import Task from '@/model/Task';
 import { computed } from 'vue';
 
 const props = defineProps({
-    state: {
-        type: Number,
+    task: {
+        type: Task,
+        required: true
+    },
+    checklists: {
+        type: Array,
         required: true
     },
     checklistIndex: {
@@ -31,17 +36,22 @@ const idInProgress = computed(() => {
 const idDone = computed(() => {
     return taskId.value + "-done"
 });
+
+const saveStates = (state) => {
+    props.task.state = state;
+    localStorage.setItem("checklists", JSON.stringify(props.checklists));
+}
 </script>
 
 <template>
     <div class="tri-state">
-        <input :id="idTodo" :name="taskId" type="radio" :checked="state == 0"/>
+        <input :id="idTodo" :name="taskId" type="radio" v-on:change="saveStates(0)" :checked="task.state == 0"/>
         <label :for="idTodo" onclick="">❌ To do</label>
 
-        <input :id="idInProgress" :name="taskId" type="radio" :checked="state == 0"/>
+        <input :id="idInProgress" :name="taskId" type="radio" v-on:change="saveStates(1)" :checked="task.state == 1"/>
         <label :for="idInProgress" onclick="">⏳ In Progress</label>
 
-        <input :id="idDone" :name="taskId" type="radio" :checked="state == 0"/>
+        <input :id="idDone" :name="taskId" type="radio" v-on:change="saveStates(2)" :checked="task.state == 2"/>
         <label :for="idDone" onclick="">✅ Done</label>
     </div>
 </template>
@@ -50,9 +60,9 @@ const idDone = computed(() => {
 .tri-state {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     background-color: light-dark(#FFFFFF, #000000);
     border-radius: 5px;
-    margin: 0 0 15px 0;
 }
 
 .tri-state > label {

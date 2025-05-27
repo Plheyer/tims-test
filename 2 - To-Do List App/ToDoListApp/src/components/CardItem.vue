@@ -1,30 +1,42 @@
 <script setup>
-    import Task from '@/model/Task';
+import Task from '@/model/Task';
 import TriStateButton from './TriStateButton.vue';
-    const props = defineProps({
-        task: {
-            type: Task,
-            required: true
-        },
-        checklistIndex: {
-            type: Number,
-            required: true
-        },
-        taskIndex: {
-            type: Number,
-            required: true
-        },
-    });
-
+import Checklist from '@/model/Checklist';
+const props = defineProps({
+    task: {
+        type: Task,
+        required: true
+    },
+    checklistIndex: {
+        type: Number,
+        required: true
+    },
+    taskIndex: {
+        type: Number,
+        required: true
+    },
+    checklists: {
+        type: Array,
+        required: true
+    },
+    checklist: {
+        type: Checklist,
+        required: true
+    },
+});
+const removeTask = () => {
+    props.checklist.removeTask(props.task);
+    localStorage.setItem("checklists", JSON.stringify(props.checklists));
+}
 </script>
 
 <template>
     <div class="card-item">
         <div class="card-item-title">
             <input type="text" :value="task.text" />
-            <button class="delete-button">🗑️</button>
+            <button class="delete-button" v-on:click="removeTask">🗑️</button>
         </div>
-        <TriStateButton :checklistIndex="checklistIndex" :taskIndex="taskIndex" :state="task.state" />
+        <TriStateButton :checklistIndex="checklistIndex" :checklists="props.checklists" :taskIndex="taskIndex" :task="task" />
     </div>
 </template>
 
@@ -32,7 +44,7 @@ import TriStateButton from './TriStateButton.vue';
 .card-item {
     display: flex;
     flex-direction: column;
-    margin: 5px 0;
+    margin: 15px 0;
 }
 
 .card-item:not(:last-child)::after {
@@ -63,7 +75,8 @@ import TriStateButton from './TriStateButton.vue';
 }
 
 .card-item-title > input, .card-new-task > input {
-    flex: 1;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .delete-button {
